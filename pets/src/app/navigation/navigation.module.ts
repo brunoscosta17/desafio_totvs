@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 // COMPONENTS
 import { MenuComponent } from "./menu/menu.component";
@@ -13,11 +14,12 @@ import { NotFoundComponent } from "./not-found/not-found.component";
         MenuComponent,
         HomeComponent,
         FooterComponent,
-        NotFoundComponent
+        NotFoundComponent,
     ],
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        NgbModule
     ],
     exports: [
         MenuComponent,
