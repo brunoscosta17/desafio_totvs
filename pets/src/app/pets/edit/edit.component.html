@@ -1,0 +1,75 @@
+<div class="container main-container">
+
+    <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+        <p style="color: white"> Processando... </p>
+    </ngx-spinner> -->
+
+    <h1>Editar Pet</h1>
+    <hr>
+    <form novalidate="novalidate" (ngSubmit)="handleSubmit()" [formGroup]="form">
+
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Nome</label>
+            <div>
+                <input class="form-control" id="name" type="text" placeholder="Nome (requerido)" formControlName="name" [ngClass]="{'is-invalid': displayMessage.name }" />
+                <span class="text-danger" *ngIf="displayMessage.name">
+                    <p [innerHTML]="displayMessage.name"></p>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Apelido</label>
+            <div>
+                <input class="form-control" id="nickName" type="text" placeholder="Apelido (requerido)" formControlName="nickName"/>
+
+                <span class="text-danger" *ngIf="displayMessage.nickName">
+                    <p [innerHTML]="displayMessage.nickName"></p>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Raça</label>
+            <div>
+                <input class="form-control" id="breed" type="text" placeholder="Raça (requerido)" formControlName="breed" [ngClass]="{ 'is-invalid': displayMessage.breed }" />
+                <span class="text-danger" *ngIf="displayMessage.breed">
+                    <p [innerHTML]="displayMessage.breed"></p>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Espécie</label>
+            <div>
+                <input class="form-control" id="species" type="text" placeholder="Espécie (requerido)" formControlName="species" [ngClass]="{ 'is-invalid': displayMessage.species }" />
+                <span class="text-danger" *ngIf="displayMessage.species">
+                    <p [innerHTML]="displayMessage.species"></p>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" value="Atualizar" class="btn btn-primary">&nbsp;
+            <a class="btn btn-info" [routerLink]="[ '/pets/todos']">Voltar</a>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-2">
+                <p>Formulario valido: {{ form.valid }}</p>
+                <p>Formulario Tocado: {{ form.touched }}</p>
+                <p>Formulario Sujo: {{ form.dirty }}</p><br>
+            </div>
+        </div>
+
+    </form>
+
+</div>

@@ -19,23 +19,18 @@ export class PetService {
         return this.http.get<Pet[]>(`${this.baseUrl}/pets`)
     }
 
-    // obterPorId(id: string): Observable<Pet> {
-    //     return this.http
-    //         .get<Pet>(this.UrlServiceV1 + "fornecedores/" + id, super.ObterAuthHeaderJson())
-    //         .pipe(catchError(error));
-    // }
+    getById(id: string) {
+        return this.http
+            .get<Pet>(`${this.baseUrl}/pets/${id}`)
+    }
 
     post(pet: Pet) {
         return this.http.post(`${this.baseUrl}/pets`, pet);
     }
 
-    // atualizarPet(fornecedor: Pet): Observable<Pet> {
-    //     return this.http
-    //         .put(this.UrlServiceV1 + "fornecedores/" + fornecedor.id, fornecedor, super.ObterAuthHeaderJson())
-    //         .pipe(
-    //             map(super.extractData),
-    //             catchError(error));
-    // }
+    update(pet: Pet) {
+        return this.http.put(`${this.baseUrl}/pets/${pet.id}`, pet)
+    }
 
     remove(id: string) {
         return this.http.delete(`${this.baseUrl}/pets/${id}`)

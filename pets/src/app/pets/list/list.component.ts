@@ -19,12 +19,14 @@ export class ListComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getList();
+  }
+
+  getList() {
     this.petService.get()
       .subscribe(pets => {
         this.pets = pets;
-        // this.getOwnerData(pets.ownerId);
       });
-    
   }
 
   getOwnerData(id: string) {
@@ -52,8 +54,8 @@ export class ListComponent implements OnInit {
     this.petService.remove(id)
       .subscribe(response => {
         this.toastr.success('Pet removido com sucesso!');
-      },
-      error => this.toastr.error('Erro ao remover este pet.'));
+        this.getList();
+      }, (error) => this.toastr.error('Erro ao remover este pet.'));
   }
 
 }

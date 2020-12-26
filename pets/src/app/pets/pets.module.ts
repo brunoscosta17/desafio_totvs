@@ -10,13 +10,15 @@ import { PetAppComponent } from './pet.app.component';
 import { PetService } from './services/pet.service';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
 
 
 @NgModule({
     declarations: [
       PetAppComponent,
       ListComponent,
-      AddComponent
+      AddComponent,
+      EditComponent
     ],
     imports: [
       CommonModule,
