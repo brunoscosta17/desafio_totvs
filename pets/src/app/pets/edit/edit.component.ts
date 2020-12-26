@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -12,49 +12,56 @@ import { Pet } from '../models/pet';
 import { PetService } from '../services/pet.service';
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
+import { fromEvent, merge, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html'
 })
-export class EditComponent extends FormBaseComponent implements OnInit {
+export class EditComponent extends FormBaseComponent implements OnInit, AfterViewInit {
 
-  @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+    @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-  errors: any[] = [];
-  form: FormGroup;
+    validationMessages: ValidationMessages;
+    genericValidator: GenericValidator;
+    displayMessage: DisplayMessage = {};
 
-  pet: Pet = new Pet();
+    errors: any[] = [];
+    form: FormGroup;
 
-  textoDocumento: string = '';
+    pet: Pet = new Pet();
 
-  MASKS = utilsBr.MASKS;
+    textoDocumento: string = '';
 
-  constructor(private fb: FormBuilder,
-    private petService: PetService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService,
-    private route: ActivatedRoute,
-    private modalService: NgbModal) {
+    MASKS = utilsBr.MASKS;
 
-    super();
+    constructor(private fb: FormBuilder,
+        private petService: PetService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private toastr: ToastrService,
+        private route: ActivatedRoute,
+        private modalService: NgbModal) {
 
-    this.validationMessages = {
-        name: {
-        required: 'Informe o nome',
-        },
-        nickname: {
-        required: 'Informe o apelido',
-        },
-        breed: {
-        required: 'Informe a raça',
-        },
-        species: {
-        required: 'Informe a espécie',
-        },
-    };
+        super();
 
+        this.validationMessages = {
+            name: {
+            required: 'Informe o nome',
+            },
+            nickName: {
+            required: 'Informe o apelido',
+            },
+            breed: {
+            required: 'Informe a raça',
+            },
+            species: {
+            required: 'Informe a espécie',
+            },
+        };
+
+    this.genericValidator = new GenericValidator(this.validationMessages);
     super.configValidationMessages(this.validationMessages);
 
     this.pet = this.route.snapshot.data['pet'];
@@ -77,26 +84,35 @@ export class EditComponent extends FormBaseComponent implements OnInit {
         species: ['', [Validators.required]],
     });
 
+    
     setTimeout(() => {
-    //   this.spinner.hide();
+        //   this.spinner.hide();
     }, 1000);
-  }
+}
 
-  handleSubmit() {
-      if (this.form.valid) {
-          
-        const valueFinal = cloneDeep(this.form.value);
-        valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
-          
-        this.petService.update(valueFinal)
-            .subscribe(
-            success => { 
-                this.processSuccess(success);
-                this.router.navigate(['pets/todos']); 
-            },
-            error => { this.processError(error) });
-        }
-  }
+ngAfterViewInit(): void {
+    let controlBlurs: Observable<any>[] = this.formInputElements
+        .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
+    merge(...controlBlurs).subscribe(() => {
+        this.displayMessage = this.genericValidator.showMessages(this.form);
+    });
+}
+
+handleSubmit() {
+    if (this.form.valid) {
+        
+    const valueFinal = cloneDeep(this.form.value);
+    valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
+        
+    this.petService.update(valueFinal)
+        .subscribe(
+        success => { 
+            this.processSuccess(success);
+            this.router.navigate(['pets/todos']); 
+        },
+        error => { this.processError(error) });
+    }
+}
 
   processSuccess(response: any) {
     this.errors = [];

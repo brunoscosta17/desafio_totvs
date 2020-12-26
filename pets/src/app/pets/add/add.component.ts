@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -8,15 +8,21 @@ import { utilsBr } from 'js-brasil';
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { Pet } from '../models/pet';
 import { PetService } from '../services/pet.service';
+import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
+import { fromEvent, merge, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html'
 })
 
-export class AddComponent extends FormBaseComponent implements OnInit {
+export class AddComponent extends FormBaseComponent implements OnInit, AfterViewInit {
 
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+
+    validationMessages: ValidationMessages;
+    genericValidator: GenericValidator;
+    displayMessage: DisplayMessage = {};
 
     errors: any[] = [];
     form: FormGroup;
@@ -35,7 +41,7 @@ export class AddComponent extends FormBaseComponent implements OnInit {
             name: {
             required: 'Informe o nome',
             },
-            nickname: {
+            nickName: {
             required: 'Informe o apelido',
             },
             breed: {
@@ -46,6 +52,7 @@ export class AddComponent extends FormBaseComponent implements OnInit {
             },
         };
 
+        this.genericValidator = new GenericValidator(this.validationMessages);
         super.configValidationMessages(this.validationMessages);
     }
 
@@ -55,6 +62,14 @@ export class AddComponent extends FormBaseComponent implements OnInit {
             nickName: ['', [Validators.required]],
             breed: ['', [Validators.required]],
             species: ['', [Validators.required]],
+        });
+    }
+
+    ngAfterViewInit(): void {
+        let controlBlurs: Observable<any>[] = this.formInputElements
+            .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
+        merge(...controlBlurs).subscribe(() => {
+            this.displayMessage = this.genericValidator.showMessages(this.form);
         });
     }
 
