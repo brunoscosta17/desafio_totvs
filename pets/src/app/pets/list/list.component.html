@@ -1,0 +1,53 @@
+<div class="container main-container">
+
+    <h1>Lista de Pets</h1>
+
+    <p>
+        <a class="btn btn-info" [routerLink]="['/pets/add']">Novo Pet</a>
+    </p>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Apelido</th>
+                <th>Raça</th>
+                <th>Espécie</th>
+                <th>Nome do dono</th>
+                <th>Telefone do dono</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tr *ngFor="let pet of pets; let i = index;">
+            <td>
+                {{ pet.name }}
+            </td>
+            <td>
+                {{ pet.nickName }}
+            </td>
+            <td>
+                {{ pet.breed }}
+            </td>
+            <td>
+                {{ pet.species }}
+            </td>
+            <td>
+                {{ pet.ownerId }}
+            </td>
+            <td>
+                {{ pet.ownerId }}
+            </td>
+            <td class="text-right">
+                <a class="btn btn-info" [routerLink]="['/pets/details',pet.id]">
+                    <span class="fa fa-search"></span>
+                </a>&nbsp;
+                <a class="btn btn-warning" [routerLink]="['/pets/edit',pet.id]">
+                    <span class="fa fa-pencil-alt"></span>
+                </a>&nbsp;
+                <a class="btn btn-danger" (click)="removePetAlert(pet)">
+                    <span class="fa fa-trash"></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
