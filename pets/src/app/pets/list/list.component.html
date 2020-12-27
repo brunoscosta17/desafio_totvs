@@ -1,9 +1,17 @@
 <div class="container main-container">
 
     <h1>Lista de Pets</h1>
-
-    <p><a class="btn btn-info" [routerLink]="['/pets/add']">Novo Pet</a></p>
-    <div class="table-responsive">
+    <div class="row">
+        <div class="col-6">
+            <p>
+                <a class="btn btn-info" [routerLink]="['/pets/add']">Novo Pet</a>
+            </p>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <input class="form-control" type="text" [(ngModel)]="searchValue" placeholder="Digite um nome"/>
+        </div>
+    </div>
+    <div class="table-responsive mt-3">
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -16,7 +24,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tr *ngFor="let pet of pets; let i = index;">
+            <tr *ngFor="let pet of pets | searchFilter: searchValue">
                 <td>
                     {{ pet.name }}
                 </td>

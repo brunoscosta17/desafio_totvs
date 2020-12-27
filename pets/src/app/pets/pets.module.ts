@@ -14,6 +14,7 @@ import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
 import { DetailsComponent } from './details/details.component';
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { DetailsComponent } from './details/details.component';
       ListComponent,
       AddComponent,
       EditComponent,
-      DetailsComponent
+      DetailsComponent,
+      SearchFilterPipe
     ],
     imports: [
       CommonModule,

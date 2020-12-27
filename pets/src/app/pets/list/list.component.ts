@@ -4,13 +4,14 @@ import { Pet } from '../models/pet';
 
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { OwnersService } from 'src/app/owners/services/owners.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit {
+
+  searchValue: string;
 
   public page = 1;
   public pageSize = 10;
@@ -21,7 +22,6 @@ export class ListComponent implements OnInit {
   constructor(
     private petService: PetService,
     private toastr: ToastrService,
-    private ownersService: OwnersService,
     ) { }
 
   ngOnInit(): void {
