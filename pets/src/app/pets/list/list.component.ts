@@ -12,6 +12,9 @@ import { OwnersService } from 'src/app/owners/services/owners.service';
 })
 export class ListComponent implements OnInit {
 
+  public page = 1;
+  public pageSize = 10;
+
   public pets: Pet[];
   errorMessage: string;
 
@@ -30,11 +33,6 @@ export class ListComponent implements OnInit {
       .subscribe(pets => {
         this.pets = pets;
       });
-  }
-
-  getOwnerPhone(id: string) {
-    this.ownersService.getById(id)
-      .subscribe((response) => console.log(response.phone));
   }
 
   removePetAlert(item) {
