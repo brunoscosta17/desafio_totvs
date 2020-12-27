@@ -48,5 +48,10 @@
                 </td>
             </tr>
         </table>
+        <ngb-pagination *ngIf="pets?.length > 10"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="pets?.length">
+        </ngb-pagination>
     </div>
 </div>

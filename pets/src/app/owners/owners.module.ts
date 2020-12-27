@@ -9,12 +9,18 @@ import { OwnersRoutingModule } from './owners.router';
 import { OwnersAppComponent } from './owners.app.component';
 import { OwnersService } from './services/owners.service';
 import { ListComponent } from './list/list.component';
-
+import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
+import { DetailsComponent } from './details/details.component';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
         ListComponent,
-        OwnersAppComponent
+        OwnersAppComponent,
+        AddComponent,
+        EditComponent,
+        DetailsComponent
     ],
     imports: [
       CommonModule,
@@ -23,6 +29,8 @@ import { ListComponent } from './list/list.component';
       ReactiveFormsModule,
       NgBrazil,
       TextMaskModule,
+      NgbModule,
+      NgbPaginationModule
     ],
     providers: [
       OwnersService,

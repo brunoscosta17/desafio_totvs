@@ -1,0 +1,77 @@
+<div class="container main-container">
+
+    <h1>Editar Dono</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-10">
+            <form novalidate="novalidate" [formGroup]="form" (ngSubmit)="handleSubmit()">
+
+                <div class="alert alert-danger" *ngIf="errors.length > 0">
+                    <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                    <ul>
+                        <li *ngFor="let error of errors">{{ error }}</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Nome</label>
+                    <div>
+                        <input class="form-control" id="name" type="text" placeholder="Nome (requerido)" formControlName="name" [ngClass]="{'is-invalid': displayMessage.name }" />
+                        <span class="text-danger" *ngIf="displayMessage.name">
+                            <p [innerHTML]="displayMessage.name"></p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Data de nascimento</label>
+                    <div>
+                        <input class="form-control" id="birthday" type="date" placeholder="Apelido (requerido)" formControlName="birthday"/>
+
+                        <span class="text-danger" *ngIf="displayMessage.birthday">
+                            <p [innerHTML]="displayMessage.birthday"></p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <div>
+                        <input class="form-control" id="email" type="email" placeholder="Email (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                        <span class="text-danger" *ngIf="displayMessage.email">
+                            <p [innerHTML]="displayMessage.email"></p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Telefone</label>
+                    <div>
+                        <input class="form-control" id="phone" type="text" placeholder="Telefone (requerido)" formControlName="phone" [ngClass]="{'is-invalid': displayMessage.phone }" [textMask]="{mask: MASKS.telefone.textMaskFunction}" />
+                        <span class="text-danger" *ngIf="displayMessage.phone">
+                            <p [innerHTML]="displayMessage.phone"></p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Endereço</label>
+                    <div>
+                        <input class="form-control" id="address" type="text" placeholder="Endereço (requerido)" formControlName="address" [ngClass]="{'is-invalid': displayMessage.address }" />
+                        <span class="text-danger" *ngIf="displayMessage.address">
+                            <p [innerHTML]="displayMessage.address"></p>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary" [disabled]="!this.form.valid">&nbsp;
+                    <a class="btn btn-info" [routerLink]="[ '/owners/all']">Voltar</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

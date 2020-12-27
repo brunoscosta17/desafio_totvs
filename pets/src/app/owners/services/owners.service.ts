@@ -24,24 +24,15 @@ export class OwnersService {
             .get<Owner>(`${this.baseUrl}/owner/${id}`)
     }
 
-    // novoOwner(fornecedor: Owner): Observable<Owner> {
-    //     return this.http
-    //         .post()
-    // }
+    post(pet: Owner) {
+        return this.http.post(`${this.baseUrl}/owner`, pet);
+    }
 
-    // atualizarOwner(fornecedor: Owner): Observable<Owner> {
-    //     return this.http
-    //         .put(this.UrlServiceV1 + "fornecedores/" + fornecedor.id, fornecedor, super.ObterAuthHeaderJson())
-    //         .pipe(
-    //             map(super.extractData),
-    //             catchError(error));
-    // }
+    update(pet: Owner) {
+        return this.http.put(`${this.baseUrl}/owner/${pet.id}`, pet)
+    }
 
-    // excluirOwner(id: string): Observable<Owner> {
-    //     return this.http
-    //         .delete(this.UrlServiceV1 + "fornecedores/" + id, super.ObterAuthHeaderJson())
-    //         .pipe(
-    //             map(super.extractData),
-    //             catchError(error));
-    // }
+    remove(id: string) {
+        return this.http.delete(`${this.baseUrl}/owner/${id}`)
+    }
 }

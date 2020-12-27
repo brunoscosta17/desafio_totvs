@@ -2,40 +2,44 @@
 
     <h1>Lista de Donos</h1>
 
-    <p>
-        <a class="btn btn-info" [routerLink]="['/owners/adicionar-novo']">Novo Dono</a>
-    </p>
-
-    <table class="table table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th></th>
+    <p><a class="btn btn-info" [routerLink]="['/owners/add']">Novo Dono</a></p>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr *ngFor="let owner of owners | slice: (page-1) * pageSize : page * pageSize">
+                <td>
+                    {{ owner.name }}
+                </td>
+                <td>
+                    {{ owner.email }}
+                </td>
+                <td>
+                    {{ owner.phone }}
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" [routerLink]="['/owners/details',owner.id]">
+                        <span class="fa fa-search"></span>
+                    </a>&nbsp;
+                    <a class="btn btn-warning" [routerLink]="['/owners/edit',owner.id]">
+                        <span class="fa fa-pencil-alt"></span>
+                    </a>&nbsp;
+                    <a class="btn btn-danger" (click)="removeOwnerAlert(owner)">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tr *ngFor="let pet of pets">
-            <td>
-                {{ pet.name }}
-            </td>
-            <td>
-                {{ pet.email }}
-            </td>
-            <td>
-                {{ pet.phone }}
-            </td>
-            <td class="text-right">
-                <a class="btn btn-info" [routerLink]="['/owners/details',pet.id]">
-                    <span class="fa fa-search"></span>
-                </a>&nbsp;
-                <a class="btn btn-warning" [routerLink]="['/owners/edit',pet.id]">
-                    <span class="fa fa-pencil-alt"></span>
-                </a>&nbsp;
-                <a class="btn btn-danger" [routerLink]="['/owners/remove',pet.id]">
-                    <span class="fa fa-trash"></span>
-                </a>
-            </td>
-        </tr>
-    </table>
+        </table>
+        <ngb-pagination *ngIf="owners?.length > 10"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="owners?.length">
+        </ngb-pagination>
+    </div>
 </div>

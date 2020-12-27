@@ -1,18 +1,17 @@
-import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, SimpleChanges  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { fromEvent, merge, Observable } from 'rxjs';
 
 import cloneDeep from 'lodash';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { MASKS, NgBrazilValidators } from 'ng-brazil';
 
-import { Pet } from '../models/pet';
-import { PetService } from '../services/pet.service';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { OwnersService } from 'src/app/owners/services/owners.service';
 import { Owner } from 'src/app/owners/models/owner';
+import { dateToString } from 'src/app/utils/date.functions';
 
 @Component({
   selector: 'app-edit',
@@ -28,57 +27,61 @@ export class EditComponent implements OnInit, AfterViewInit {
 
     errors: any[] = [];
     form: FormGroup;
+    formResult: string = '';
 
-    pet: Pet = new Pet();
-
+    owner: Owner = new Owner();
     owners: Owner[] = [];
 
-    constructor(private fb: FormBuilder,
-        private petService: PetService,
+    public MASKS = MASKS;
+
+    constructor(
+        private fb: FormBuilder,
         private ownersService: OwnersService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private toastr: ToastrService,
-        private route: ActivatedRoute,
-        private modalService: NgbModal) {
+        private toastr: ToastrService) {
 
-        this.validationMessages = {
+          this.validationMessages = {
             name: {
-            required: 'Informe o nome',
+                required: 'Informe o nome',
             },
-            nickName: {
-            required: 'Informe o apelido',
+            birthday: {
+                required: 'Informe a data de nascimento',
             },
-            breed: {
-            required: 'Informe a raça',
+            email: {
+                required: 'Informe o email',
             },
-            species: {
-            required: 'Informe a espécie',
+            phone: {
+                required: 'Informe o telefone',
             },
-        };
+            address: {
+                required: 'Informe o endereço',
+            },
+          };
 
     this.genericValidator = new GenericValidator(this.validationMessages);
 
-    this.pet = this.route.snapshot.data['pet'];
+    this.owner = this.activatedRoute.snapshot.data['owner'];
   }
 
   ngOnInit() {
 
-    this.petService.getById(this.activatedRoute.snapshot.paramMap.get('id'))
+    this.ownersService.getById(this.activatedRoute.snapshot.paramMap.get('id'))
         .subscribe((response) => { 
-            this.pet = response;
-            this.form.patchValue(this.pet);
+            this.owner = response;
+            this.owner.birthday = dateToString(this.owner.birthday);
+            this.form.patchValue(this.owner);
         });
 
         this.ownersService.get()
             .subscribe((response) => this.owners = response);
 
     this.form = this.fb.group({
-        name: ['', [Validators.required]],
-        nickName: ['', [Validators.required]],
-        breed: ['', [Validators.required]],
-        species: ['', [Validators.required]],
-        owner: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      birthday: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required, NgBrazilValidators.telefone]],
+      address: ['', [Validators.required]],
     });
 
 }
@@ -95,7 +98,7 @@ handleSubmit() {
     if (this.form.valid) {
 
         Swal.fire({
-            title: 'Atualizar pet?',
+            title: 'Atualizar dono?',
             text: "Tem certeza que deseja atualizar este pet?",
             icon: 'warning',
             showCancelButton: true,
@@ -107,7 +110,7 @@ handleSubmit() {
             if (result.isConfirmed) {
                 const valueFinal = cloneDeep(this.form.value);
                 valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
-                this.petService.update(valueFinal)
+                this.ownersService.update(valueFinal)
                     .subscribe(
                     success => { 
                         this.processSuccess(success);
@@ -122,7 +125,7 @@ handleSubmit() {
   processSuccess(response: any) {
     this.errors = [];
 
-    let toast = this.toastr.success('Pet atualizado com sucesso!', 'Sucesso!');
+    let toast = this.toastr.success('Owner atualizado com sucesso!', 'Sucesso!');
     if (toast) {
       toast.onHidden.subscribe(() => {
         this.router.navigate(['/pets/all']);

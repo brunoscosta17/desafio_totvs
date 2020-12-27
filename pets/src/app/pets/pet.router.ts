@@ -11,7 +11,7 @@ const petRouterConfig: Routes = [
     {
         path: '', component: PetAppComponent,
         children: [
-            { path: 'todos', component: ListComponent },
+            { path: 'all', component: ListComponent },
             {
                 path: 'add', component: AddComponent,
             },

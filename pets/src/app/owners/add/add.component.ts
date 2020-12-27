@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } 
 import { Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
+import { dateToSeconds } from 'src/app/utils/date.functions';
+import { MASKS, NgBrazilValidators } from 'ng-brazil';
 
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
-import { Pet } from '../models/pet';
-import { PetService } from '../services/pet.service';
+import { Owner } from '../models/owner';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { fromEvent, merge, Observable } from 'rxjs';
 import { OwnersService } from 'src/app/owners/services/owners.service';
-import { Owner } from 'src/app/owners/models/owner';
 
 @Component({
   selector: 'app-add',
@@ -28,13 +28,14 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
     errors: any[] = [];
     form: FormGroup;
     formResult: string = '';
-    pet: Pet = new Pet();
 
+    owner: Owner = new Owner();
     owners: Owner[] = [];
+
+    public MASKS = MASKS;
 
     constructor(
         private fb: FormBuilder,
-        private petService: PetService,
         private ownersService: OwnersService,
         private router: Router,
         private toastr: ToastrService) {
@@ -45,17 +46,17 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
             name: {
                 required: 'Informe o nome',
             },
-            nickName: {
-                required: 'Informe o apelido',
+            birthday: {
+                required: 'Informe a data de nascimento',
             },
-            breed: {
-                required: 'Informe a raça',
+            email: {
+                required: 'Informe o email',
             },
-            species: {
-                required: 'Informe a espécie',
+            phone: {
+                required: 'Informe o telefone',
             },
-            owner: {
-                required: 'Escolha um dono',
+            address: {
+                required: 'Informe o endereço',
             },
         };
 
@@ -67,10 +68,10 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
 
         this.form = this.fb.group({
             name: ['', [Validators.required]],
-            nickName: ['', [Validators.required]],
-            breed: ['', [Validators.required]],
-            species: ['', [Validators.required]],
-            owner: ['', [Validators.required]]
+            birthday: ['', [Validators.required]],
+            email: ['', [Validators.required]],
+            phone: ['', [Validators.required, NgBrazilValidators.telefone]],
+            address: ['', [Validators.required]],
         });
 
         this.ownersService.get()
@@ -89,14 +90,15 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
     handleSubmit() {
         if (this.form.dirty && this.form.valid) {
 
-            this.pet = Object.assign({}, this.pet, this.form.value);
-            this.formResult = JSON.stringify(this.pet);
+            this.owner = Object.assign({}, this.owner, this.form.value);
+            this.owner.birthday = dateToSeconds(this.owner.birthday);
+            this.formResult = JSON.stringify(this.owner);
       
-            this.petService.post(this.pet)
+            this.ownersService.post(this.owner)
               .subscribe(
                 response => { 
-                    this.toastr.success('Pet salvo com sucesso!');
-                    this.router.navigate(['pets/all']);
+                    this.toastr.success('Dono salvo com sucesso!');
+                    this.router.navigate(['owners/all']);
                 },
                 error => { this.toastr.error(error) }
               );
