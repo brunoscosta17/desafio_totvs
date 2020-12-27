@@ -13,31 +13,37 @@
                 <label class="control-label">Apelido</label>
             </dt>
             <dd class="col-sm-10">
-                {{ pet?.nickName ? pet.nickName : '-' }}
+                {{ pet?.nickName ? pet.nickName : 'Nao possui' }}
             </dd>
             <dt class="col-sm-2">
                 <label class="control-label">Nascimento</label>
             </dt>
             <dd class="col-sm-10">
-                {{ pet?.birthday ? (pet.birthday * 1000 | date: 'dd/MM/yyyy') : '-' }}
+                {{ pet?.birthday ? (pet.birthday * 1000 | date: 'dd/MM/yyyy')  : 'Nao possui' }}
             </dd>
             <dt class="col-sm-2">
                 <label class="control-label">Raça</label>
             </dt>
             <dd class="col-sm-10">
-                {{ pet?.breed ? pet.breed : '-' }}
+                {{ pet?.breed ? pet.breed : 'Nao possui' }}
             </dd>
             <dt class="col-sm-2">
                 <label class="control-label">Espécie</label>
             </dt>
             <dd class="col-sm-10">
-                {{ pet?.species ? pet.species : '-' }}
+                {{ pet?.species ? pet.species : 'Nao possui' }}
             </dd>
             <dt class="col-sm-2">
                 <label class="control-label">Dono</label>
             </dt>
             <dd class="col-sm-10">
-                {{ pet?.owner ? pet.owner : '-' }}
+                {{ pet?.owner ? pet.owner : 'Nao possui' }}
+            </dd>
+            <dt class="col-sm-2">
+                <label class="control-label">Telefone</label>
+            </dt>
+            <dd class="col-sm-10">
+                {{ pet?.ownerPhone ? pet.ownerPhone : 'Nao possui' }}
             </dd>
         </dl>
     </div>

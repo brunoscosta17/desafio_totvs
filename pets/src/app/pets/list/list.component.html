@@ -26,22 +26,22 @@
             </thead>
             <tr *ngFor="let pet of pets | searchFilter: searchValue">
                 <td>
-                    {{ pet.name }}
+                    {{ pet?.name ? pet.name : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet.nickName }}
+                    {{ pet?.name ? pet.nickName : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet.breed }}
+                    {{ pet?.name ? pet.breed : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet.species }}
+                    {{ pet?.name ? pet.species : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet.owner }}
+                    {{ pet?.owner ? pet.owner : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet.ownerId }}
+                    {{ pet?.ownerPhone ? pet.ownerPhone : 'Nao possui' }}
                 </td>
                 <td class="text-right">
                     <a class="btn btn-info" [routerLink]="['/pets/details', pet.id]">
