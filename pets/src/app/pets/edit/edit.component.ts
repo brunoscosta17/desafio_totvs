@@ -81,6 +81,22 @@ export class EditComponent implements OnInit, AfterViewInit {
         owner: ['', [Validators.required]]
     });
 
+    const controls = this.form.controls;
+
+    controls.name.valueChanges
+        .subscribe((value: string) => {
+            if (controls.name.value.length === 1 && controls.name.value === ' ') {
+                controls.name.setValue(value.trim(), { emitEvent: false })
+            }
+        });
+
+    controls.nickName.valueChanges
+    .subscribe((value: string) => {
+        if (controls.nickName.value.length === 1 && controls.nickName.value === ' ') {
+            controls.nickName.setValue(value.trim(), { emitEvent: false })
+        }
+    });
+
 }
 
 ngAfterViewInit(): void {
@@ -92,31 +108,31 @@ ngAfterViewInit(): void {
 }
 
 handleSubmit() {
-    if (this.form.valid) {
+  if (this.form.valid) {
 
-        Swal.fire({
-            title: 'Atualizar pet?',
-            text: "Tem certeza que deseja atualizar este pet?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, atualizar!',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                const valueFinal = cloneDeep(this.form.value);
-                valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
-                this.petService.update(valueFinal)
-                    .subscribe(
-                    success => { 
-                        this.processSuccess(success);
-                        this.router.navigate(['pets/all']); 
-                    },
-                    error => { this.processError(error) });
-            }
-        })  
-    }
+      Swal.fire({
+          title: 'Atualizar pet?',
+          text: "Tem certeza que deseja atualizar este pet?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sim, atualizar!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              const valueFinal = cloneDeep(this.form.value);
+              valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
+              this.petService.update(valueFinal)
+                  .subscribe(
+                  success => { 
+                      this.processSuccess(success);
+                      this.router.navigate(['pets/all']); 
+                  },
+                  error => { this.processError(error) });
+          }
+      })  
+  }
 }
 
   processSuccess(response: any) {

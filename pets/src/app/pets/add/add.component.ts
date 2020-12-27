@@ -76,6 +76,22 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
         this.ownersService.get()
             .subscribe((response) => this.owners = response);
 
+        const controls = this.form.controls;
+
+        controls.name.valueChanges
+            .subscribe((value: string) => {
+                if (controls.name.value.length === 1 && controls.name.value === ' ') {
+                    controls.name.setValue(value.trim(), { emitEvent: false })
+                }
+            });
+
+        controls.nickName.valueChanges
+        .subscribe((value: string) => {
+            if (controls.nickName.value.length === 1 && controls.nickName.value === ' ') {
+                controls.nickName.setValue(value.trim(), { emitEvent: false })
+            }
+        });
+
     }
 
     ngAfterViewInit(): void {
