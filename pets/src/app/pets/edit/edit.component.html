@@ -37,6 +37,20 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label">Espécie</label>
+            <div>
+                <select class="form-control" id="species" name="species" formControlName="species">
+                    <option value="" selected>Escolha uma espécie</option>
+                    <option value="Cão">Cão</option>
+                    <option value="Gato">Gato</option>
+                </select>
+                <span class="text-danger" *ngIf="displayMessage.species">
+                <p [innerHTML]="displayMessage.species"></p>
+            </span>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="this.form.value.species === 'Cão'">
             <label class="control-label">Raça</label>
             <div>
                 <select class="form-control" id="breed" name="breed" formControlName="breed">
@@ -54,13 +68,17 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label">Espécie</label>
+        <div class="form-group" *ngIf="this.form.value.species === 'Gato'">
+            <label class="control-label">Raça</label>
             <div>
-                <input class="form-control" id="species" type="text" placeholder="Espécie (requerido)" formControlName="species" [ngClass]="{ 'is-invalid': displayMessage.species }" />
-                <span class="text-danger" *ngIf="displayMessage.species">
-                    <p [innerHTML]="displayMessage.species"></p>
-                </span>
+                <select class="form-control" id="breed" name="breed" formControlName="breed">
+                    <option value="" selected>Escolha uma raça</option>
+                    <option value="Persa">Persa</option>
+                    <option value="Siamês">Siamês</option>
+                </select>
+                <span class="text-danger" *ngIf="displayMessage.breed">
+                <p [innerHTML]="displayMessage.breed"></p>
+            </span>
             </div>
         </div>
 
@@ -86,5 +104,3 @@
     </form>
 
 </div>
-
-<pre>{{ this.form.value | json }}</pre>
