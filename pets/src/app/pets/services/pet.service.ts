@@ -21,7 +21,7 @@ export class PetService {
 
     getById(id: string) {
         return this.http
-            .get<Pet>(`${this.baseUrl}/pets/${id}`)
+            .get<Pet>(`${this.baseUrl}pets/${id}`)
     }
 
     post(pet: Pet) {

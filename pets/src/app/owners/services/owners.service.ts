@@ -8,7 +8,7 @@ import { Owner } from '../models/owner';
 @Injectable()
 export class OwnersService {
 
-    fornecedor: Owner = new Owner();
+    private baseUrl = 'https://5f779702d5c9cb001623760a.mockapi.io/api/v1';
 
     constructor(
         private http: HttpClient
@@ -16,14 +16,13 @@ export class OwnersService {
 
     get(): Observable<Owner[]> {
         return this.http
-            .get<Owner[]>('https://5f779702d5c9cb001623760a.mockapi.io/api/v1/owner')
+            .get<Owner[]>(`${this.baseUrl}/owner`)
     }
 
-    // obterPorId(id: string): Observable<Owner> {
-    //     return this.http
-    //         .get<Owner>(this.UrlServiceV1 + "fornecedores/" + id, super.ObterAuthHeaderJson())
-    //         .pipe(catchError(error));
-    // }
+    getById(id: string) {
+        return this.http
+            .get<Owner>(`${this.baseUrl}/owner/${id}`)
+    }
 
     // novoOwner(fornecedor: Owner): Observable<Owner> {
     //     return this.http
@@ -44,19 +43,5 @@ export class OwnersService {
     //         .pipe(
     //             map(super.extractData),
     //             catchError(error));
-    // }
-
-    // atualizarEndereco(endereco: Endereco): Observable<Endereco> {
-    //     return this.http
-    //         .put(this.UrlServiceV1 + "fornecedores/endereco/" + endereco.id, endereco, super.ObterAuthHeaderJson())
-    //         .pipe(
-    //             map(super.extractData),
-    //             catchError(error));
-    // }
-
-    // consultarCep(cep: string): Observable<CepConsulta> {
-    //     return this.http
-    //         .get<CepConsulta>(`https://viacep.com.br/ws/${cep}/json/`)
-    //         .pipe(catchError(error))
     // }
 }

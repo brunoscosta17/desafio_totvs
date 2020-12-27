@@ -3,23 +3,21 @@ import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } 
 import { Router, ActivatedRoute } from '@angular/router';
 
 import cloneDeep from 'lodash';
-import { utilsBr } from 'js-brasil';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Pet } from '../models/pet';
 import { PetService } from '../services/pet.service';
-import { FormBaseComponent } from 'src/app/base-components/form-base.component';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { fromEvent, merge, Observable } from 'rxjs';
+import { OwnersService } from 'src/app/owners/services/owners.service';
+import { Owner } from 'src/app/owners/models/owner';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html'
 })
-export class EditComponent extends FormBaseComponent implements OnInit, AfterViewInit {
+export class EditComponent implements OnInit, AfterViewInit {
 
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
@@ -32,19 +30,16 @@ export class EditComponent extends FormBaseComponent implements OnInit, AfterVie
 
     pet: Pet = new Pet();
 
-    textoDocumento: string = '';
-
-    MASKS = utilsBr.MASKS;
+    owners: Owner[] = [];
 
     constructor(private fb: FormBuilder,
         private petService: PetService,
+        private ownersService: OwnersService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private modalService: NgbModal) {
-
-        super();
 
         this.validationMessages = {
             name: {
@@ -62,7 +57,6 @@ export class EditComponent extends FormBaseComponent implements OnInit, AfterVie
         };
 
     this.genericValidator = new GenericValidator(this.validationMessages);
-    super.configValidationMessages(this.validationMessages);
 
     this.pet = this.route.snapshot.data['pet'];
   }
@@ -75,19 +69,17 @@ export class EditComponent extends FormBaseComponent implements OnInit, AfterVie
             this.form.patchValue(this.pet);
         });
 
-    // this.spinner.show();
+        this.ownersService.get()
+            .subscribe((response) => this.owners = response);
 
     this.form = this.fb.group({
         name: ['', [Validators.required]],
         nickName: ['', [Validators.required]],
         breed: ['', [Validators.required]],
         species: ['', [Validators.required]],
+        owner: ['', [Validators.required]]
     });
 
-    
-    setTimeout(() => {
-        //   this.spinner.hide();
-    }, 1000);
 }
 
 ngAfterViewInit(): void {

@@ -4,6 +4,7 @@ import { Pet } from '../models/pet';
 
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { OwnersService } from 'src/app/owners/services/owners.service';
 
 @Component({
   selector: 'app-list',
@@ -16,7 +17,9 @@ export class ListComponent implements OnInit {
 
   constructor(
     private petService: PetService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private ownersService: OwnersService,
+    ) { }
 
   ngOnInit(): void {
     this.getList();
@@ -29,8 +32,9 @@ export class ListComponent implements OnInit {
       });
   }
 
-  getOwnerData(id: string) {
-
+  getOwnerPhone(id: string) {
+    this.ownersService.getById(id)
+      .subscribe((response) => console.log(response.phone));
   }
 
   removePetAlert(item) {

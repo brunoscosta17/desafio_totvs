@@ -5,5 +5,6 @@ export class Pet {
     breed: string;
     species: string;
     ownerId: string;
+    owner: string;
     ownerPhone: string
 }

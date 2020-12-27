@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators, FormControlName, AbstractControl } 
 import { Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
-import { utilsBr } from 'js-brasil';
 
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { Pet } from '../models/pet';
 import { PetService } from '../services/pet.service';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { fromEvent, merge, Observable } from 'rxjs';
+import { OwnersService } from 'src/app/owners/services/owners.service';
+import { Owner } from 'src/app/owners/models/owner';
 
 @Component({
   selector: 'app-add',
@@ -29,9 +30,12 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
     formResult: string = '';
     pet: Pet = new Pet();
 
+    owners: Owner[] = [];
+
     constructor(
         private fb: FormBuilder,
         private petService: PetService,
+        private ownersService: OwnersService,
         private router: Router,
         private toastr: ToastrService) {
 
@@ -39,16 +43,19 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
 
         this.validationMessages = {
             name: {
-            required: 'Informe o nome',
+                required: 'Informe o nome',
             },
             nickName: {
-            required: 'Informe o apelido',
+                required: 'Informe o apelido',
             },
             breed: {
-            required: 'Informe a raça',
+                required: 'Informe a raça',
             },
             species: {
-            required: 'Informe a espécie',
+                required: 'Informe a espécie',
+            },
+            owner: {
+                required: 'Escolha um dono',
             },
         };
 
@@ -57,12 +64,18 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
     }
 
     ngOnInit() {
+
         this.form = this.fb.group({
             name: ['', [Validators.required]],
             nickName: ['', [Validators.required]],
             breed: ['', [Validators.required]],
             species: ['', [Validators.required]],
+            owner: ['', [Validators.required]]
         });
+
+        this.ownersService.get()
+            .subscribe((response) => this.owners = response);
+
     }
 
     ngAfterViewInit(): void {

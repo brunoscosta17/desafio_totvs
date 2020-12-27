@@ -39,10 +39,18 @@
         <div class="form-group">
             <label class="control-label">Raça</label>
             <div>
-                <input class="form-control" id="breed" type="text" placeholder="Raça (requerido)" formControlName="breed" [ngClass]="{ 'is-invalid': displayMessage.breed }" />
+                <select class="form-control" id="breed" name="breed" formControlName="breed">
+                    <option value="" selected>Escolha uma raça</option>
+                    <option value="Pug">Pug</option>
+                    <option value="Maltês">Maltês</option>
+                    <option value="Shih Tzu">Shih Tzu</option>
+                    <option value="Buldog">Buldog</option>
+                    <option value="Pit Bull">Pit Bull</option>
+                    <option value="Basset">Basset</option>
+                </select>
                 <span class="text-danger" *ngIf="displayMessage.breed">
-                    <p [innerHTML]="displayMessage.breed"></p>
-                </span>
+                <p [innerHTML]="displayMessage.breed"></p>
+            </span>
             </div>
         </div>
 
@@ -56,6 +64,19 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label">Dono</label>
+            <div>
+                <select class="form-control" id="owner" name="owner" formControlName="owner">
+                    <option value="" selected>Escolha um dono</option>
+                    <option *ngFor="let owner of owners" [value]="owner.name">{{ owner.name }}</option>
+                </select>
+                <span class="text-danger" *ngIf="displayMessage.owner">
+                <p [innerHTML]="displayMessage.owner"></p>
+            </span>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <input type="submit" value="Atualizar" class="btn btn-primary" [disabled]="!this.form.valid">&nbsp;
@@ -65,3 +86,5 @@
     </form>
 
 </div>
+
+<pre>{{ this.form.value | json }}</pre>

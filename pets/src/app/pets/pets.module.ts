@@ -11,14 +11,16 @@ import { PetService } from './services/pet.service';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
-
+import { OwnersService } from '../owners/services/owners.service';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
     declarations: [
       PetAppComponent,
       ListComponent,
       AddComponent,
-      EditComponent
+      EditComponent,
+      DetailsComponent
     ],
     imports: [
       CommonModule,
@@ -30,6 +32,7 @@ import { EditComponent } from './edit/edit.component';
     ],
     providers: [
       PetService,
+      OwnersService
     ]
   })
   export class PetsModule { }

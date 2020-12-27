@@ -5,6 +5,7 @@ import { PetAppComponent } from './pet.app.component';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
+import { DetailsComponent } from './details/details.component';
 
 const petRouterConfig: Routes = [
     {
@@ -17,20 +18,9 @@ const petRouterConfig: Routes = [
             {
                 path: 'edit/:id', component: EditComponent,
             },
-            // {
-            //     path: 'detalhes/:id', component: DetalhesComponent,
-            //     resolve: {
-            //         fornecedor: FornecedorResolve
-            //     }
-            // },
-            // {
-            //     path: 'excluir/:id', component: ExcluirComponent,
-            //     canActivate: [FornececedorGuard],
-            //     data: [{ claim: { nome: 'Fornecedor', valor: 'Excluir' } }],
-            //     resolve: {
-            //         fornecedor: FornecedorResolve
-            //     }
-            // }
+            {
+                path: 'details/:id', component: DetailsComponent
+            },
         ]
     }
 ];
