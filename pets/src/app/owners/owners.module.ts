@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgBrazil } from 'ng-brazil';
 import { TextMaskModule } from 'angular2-text-mask';
+import { SearchFilterPipe } from 'src/app/search-filter.pipe';
 
 import { OwnersRoutingModule } from './owners.router';
 import { OwnersAppComponent } from './owners.app.component';
@@ -20,7 +21,8 @@ import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
         OwnersAppComponent,
         AddComponent,
         EditComponent,
-        DetailsComponent
+        DetailsComponent,
+        SearchFilterPipe
     ],
     imports: [
       CommonModule,

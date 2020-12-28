@@ -24,7 +24,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tr *ngFor="let pet of pets | searchFilter: searchValue">
+            <tr *ngFor="let pet of pets | slice: (page-1) * pageSize : page * pageSize | searchFilter: searchValue">
                 <td>
                     {{ pet?.name ? pet.name : 'Nao possui' }}
                 </td>
@@ -38,10 +38,10 @@
                     {{ pet?.name ? pet.species : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet?.owner ? pet.owner : 'Nao possui' }}
+                    {{ pet?.pet ? pet.pet : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet?.ownerPhone ? pet.ownerPhone : 'Nao possui' }}
+                    {{ pet?.petPhone ? pet.petPhone : 'Nao possui' }}
                 </td>
                 <td class="text-right">
                     <a class="btn btn-info" [routerLink]="['/pets/details', pet.id]">
@@ -56,7 +56,7 @@
                 </td>
             </tr>
         </table>
-        <ngb-pagination *ngIf="pets?.length > 10"
+        <ngb-pagination *ngIf="pets?.length >= 5"
             [(page)]="page"
             [pageSize]="pageSize"
             [collectionSize]="pets?.length">
