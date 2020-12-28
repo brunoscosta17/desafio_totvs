@@ -1,7 +1,6 @@
 # Desafio Frontend Backoffice Protheus 2020
 
-# O objetivo
-Desenvolver um controle de Pets e Donos.
+Objetivo: Desenvolver um controle de Pets e Donos.
 
 # Clone o repositório
 git clone https://github.com/brunoscosta17/desafio_totvs.git
