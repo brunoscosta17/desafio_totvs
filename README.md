@@ -9,7 +9,7 @@ Angular CLI: 11.0.5 e Node: 14.15.3
 git clone https://github.com/brunoscosta17/desafio_totvs.git
 
 # Acesse o diretório
-cd dir_do_projeto
+cd dir_do_projeto/pets
 
 # Instale as dependencias
 npm install
