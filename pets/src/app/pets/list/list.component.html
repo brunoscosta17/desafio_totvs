@@ -38,10 +38,10 @@
                     {{ pet?.name ? pet.species : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet?.pet ? pet.pet : 'Nao possui' }}
+                    {{ pet?.owner ? pet.owner : 'Nao possui' }}
                 </td>
                 <td>
-                    {{ pet?.petPhone ? pet.petPhone : 'Nao possui' }}
+                    {{ pet?.ownerPhone ? pet.ownerPhone : 'Nao possui' }}
                 </td>
                 <td class="text-right">
                     <a class="btn btn-info" [routerLink]="['/pets/details', pet.id]">

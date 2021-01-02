@@ -44,19 +44,20 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
 
         this.validationMessages = {
             name: {
-                required: 'Informe o nome',
+                required: 'Informe o nome!',
             },
             birthday: {
-                required: 'Informe a data de nascimento',
+                required: 'Informe a data de nascimento!',
             },
             email: {
-                required: 'Informe o email',
+                required: 'Informe o email!',
+                email: 'Informe um e-mail válido!'
             },
             phone: {
-                required: 'Informe o telefone',
+                required: 'Informe o telefone!',
             },
             address: {
-                required: 'Informe o endereço',
+                required: 'Informe o endereço!',
             },
         };
 
@@ -69,7 +70,7 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
         this.form = this.fb.group({
             name: ['', [Validators.required]],
             birthday: ['', [Validators.required]],
-            email: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
             phone: ['', [Validators.required, NgBrazilValidators.telefone]],
             address: ['', [Validators.required]],
         });
