@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListComponent implements OnInit {
 
+  searchValue: string;
+
   public page = 1;
   public pageSize = 5;
 

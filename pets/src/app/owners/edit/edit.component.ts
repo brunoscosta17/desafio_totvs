@@ -94,33 +94,33 @@ ngAfterViewInit(): void {
     });
 }
 
-handleSubmit() {
-    if (this.form.valid) {
+  handleSubmit() {
+      if (this.form.valid) {
 
-        Swal.fire({
-            title: 'Atualizar dono?',
-            text: "Tem certeza que deseja atualizar este pet?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, atualizar!',
-            cancelButtonText: 'Cancelar'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                const valueFinal = cloneDeep(this.form.value);
-                valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
-                this.ownersService.update(valueFinal)
-                    .subscribe(
-                    success => { 
-                        this.processSuccess(success);
-                        this.router.navigate(['pets/all']); 
-                    },
-                    error => { this.processError(error) });
-            }
-        })  
-    }
-}
+          Swal.fire({
+              title: 'Atualizar dono?',
+              text: "Tem certeza que deseja atualizar os dados?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Sim, atualizar!',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  const valueFinal = cloneDeep(this.form.value);
+                  valueFinal.id = this.activatedRoute.snapshot.paramMap.get('id');
+                  this.ownersService.update(valueFinal)
+                      .subscribe(
+                      success => { 
+                          this.processSuccess(success);
+                          this.router.navigate(['pets/all']); 
+                      },
+                      error => { this.processError(error) });
+              }
+          })  
+      }
+  }
 
   processSuccess(response: any) {
     this.errors = [];

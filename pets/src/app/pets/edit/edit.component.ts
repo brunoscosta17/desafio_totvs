@@ -112,7 +112,7 @@ handleSubmit() {
 
       Swal.fire({
           title: 'Atualizar pet?',
-          text: "Tem certeza que deseja atualizar este pet?",
+          text: "Tem certeza que deseja atualizar os dados?",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
