@@ -53,7 +53,7 @@ export class EditComponent implements OnInit, AfterViewInit {
             required: 'Informe a raça',
             },
             species: {
-            required: 'Informe a espécie',
+            required: 'Escolha uma espécie',
             },
         };
 

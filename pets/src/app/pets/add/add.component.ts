@@ -52,7 +52,7 @@ export class AddComponent extends FormBaseComponent implements OnInit, AfterView
                 required: 'Informe a raça',
             },
             species: {
-                required: 'Informe a espécie',
+                required: 'Escolha uma espécie',
             },
             owner: {
                 required: 'Escolha um dono',

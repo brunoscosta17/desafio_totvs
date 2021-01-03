@@ -50,6 +50,7 @@ export class EditComponent implements OnInit, AfterViewInit {
             },
             email: {
                 required: 'Informe o email',
+                email: 'Informe um e-mail válido!'
             },
             phone: {
                 required: 'Informe o telefone',
@@ -79,9 +80,25 @@ export class EditComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       birthday: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, NgBrazilValidators.telefone]],
       address: ['', [Validators.required]],
+    });
+
+    const controls = this.form.controls;
+
+    controls.name.valueChanges
+      .subscribe((value: string) => {
+          if (controls.name.value.length === 1 && controls.name.value === ' ') {
+              controls.name.setValue(value.trim(), { emitEvent: false })
+          }
+      });
+
+    controls.address.valueChanges
+    .subscribe((value: string) => {
+        if (controls.address.value.length === 1 && controls.address.value === ' ') {
+            controls.address.setValue(value.trim(), { emitEvent: false })
+        }
     });
 
 }
@@ -118,7 +135,7 @@ ngAfterViewInit(): void {
                       },
                       error => { this.processError(error) });
               }
-          })  
+          });
       }
   }
 
